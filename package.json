@@ -1,0 +1,25 @@
+{
+	"files" : [
+		"config.xml",
+		"includes/00-webcache.js",
+		"index.html",
+		"background.js"
+	],
+	
+	"name" : "webcache",
+	"version" : "0.0.1",
+	"description" : "TODO",
+	"author" : "Alexander Gromnitsky <alexander.gromnitsky@gmail.com>",
+	"license": {
+		"type" : "MIT",
+		"url" : "http://www.opensource.org/licenses/mit-license.php"
+	},
+	"repository" : {
+		"type" : "git",
+		"url" : "http://github.com/gromnitsky/webcache"
+	},
+	
+	"dependencies" : {
+		"tap" : "~> 0.2.5"
+	}
+}

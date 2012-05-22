@@ -1,0 +1,9 @@
+# DO NOT DELETE THIS FILE
+# unless you don't want to upgrade scaffolds in the future.
+---
+project:
+  classy: webcache
+  upgraded: '2012-05-22T20:39:19+03:00'
+template:
+  version: 0.0.1
+  name: js-opera-ext

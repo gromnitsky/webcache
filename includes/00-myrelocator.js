@@ -35,13 +35,14 @@ MyRelocator.data = {
 		'callback' : MyRelocator.rewriteUri,
 		'uri' : 'http://blekko-webcache.com/cache/%s'
 	},
+	'Bing' : {
+		'hide' : true,
+		'callback' : MyRelocator.bingCache,
+		'uri' : null
+	},
 	'Wayback Machine' : {
 		'callback' : MyRelocator.rewriteUri,
 		'uri' : 'http://wayback.archive.org/web/*/%s'
-	},
-	'Bing' : {
-		'callback' : MyRelocator.bingCache,
-		'uri' : null
 	}
 }
 

@@ -13,7 +13,7 @@
 	
 	"name" : "webcache",
 	"version" : "0.0.1",
-	"description" : "TODO",
+	"description" : "Creates a toolbar button with a popup menu of several web crawlers.",
 	"author" : "Alexander Gromnitsky <alexander.gromnitsky@gmail.com>",
 	"license": {
 		"type" : "MIT",

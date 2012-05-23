@@ -5,7 +5,7 @@ window.addEventListener("load", function() {
 		popup: {
             href: "popup.html",
             width: 200,
-            height: 200
+            height: 150
         }
 	}
 

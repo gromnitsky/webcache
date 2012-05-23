@@ -11,6 +11,10 @@ MyRelocator.bingCache = function(src, uri_template) {
 	throw new Error("not implemented")
 }
 
+MyRelocator.isSeparator = function(text) {
+	return text.match(/^separator$/i)
+}
+
 /*
   Callback:
 
@@ -26,6 +30,7 @@ MyRelocator.data = {
 		'callback' : MyRelocator.rewriteUri,
 		'uri' : 'http://webcache.googleusercontent.com/search?q=cache:%s&strip=1'
 	},
+	'separator' : null,
 	'Blekko' : {
 		'callback' : MyRelocator.rewriteUri,
 		'uri' : 'http://blekko-webcache.com/cache/%s'

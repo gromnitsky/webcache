@@ -1,9 +1,14 @@
 {
 	"files" : [
+		"icons/64.png",
+		"icons/18.png",
 		"config.xml",
-		"includes/00-webcache.js",
+		"includes/00-myrelocator.js",
+		"includes/99-webcache.js",
 		"index.html",
-		"background.js"
+		"background.js",
+		"popup.html",
+		"popup.js"
 	],
 	
 	"name" : "webcache",

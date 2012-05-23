@@ -29,7 +29,6 @@ Linker.prototype.handleMessageFromInjectedScript = function(event) {
 Linker.prototype.mybind = function() {
 	var e = document.querySelectorAll('li')
 	for (var i = 0, len = e.length; i < len; i++) {
-//		console.log(e[i].innerText)
 		o = this
 		e[i].addEventListener('click', function() {
 			o.sendMessage(this.innerText)
@@ -41,9 +40,12 @@ Linker.prototype.sendMessage = function(msg) {
 	if (!this.port) return
 	
 	this.port.postMessage(msg)
-	console.log('popup.js: send msg was: ' + msg)
+	console.log('popup.js: send a msg: ' + msg)
+//	window.close()
 }
 
+
+/* main */
 window.onload = function() {
 	var linker = new Linker()
 	linker.listen()

@@ -1,4 +1,3 @@
-// Listen for messages from background.js
 (function() {
 
 	// Listen to messages from background.js
@@ -6,7 +5,6 @@
 		switch (event.data) {
 		case 'port:new':
 			var channel = new MessageChannel()
-			
 			event.ports[0].postMessage("port:ready", [channel.port2])
 			channel.port1.onmessage = handlePopupMessage
 			
@@ -21,7 +19,8 @@
 	function handlePopupMessage(event) {
 		console.log("99-webcache.js: MESSAGE RECEIVED FROM THE POPUP: " + event.data)
 
-		// sent it to background.js to open a new tab with
+		// sent it to background.js to open a new tab with current
+		// window URL
 		opera.extension.postMessage(MyRelocator.relocate(window.location.toString(),
 														 event.data))
 	}

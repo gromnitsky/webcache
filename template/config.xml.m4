@@ -10,6 +10,6 @@
   <preference name='width' value='500' readonly = 'false' />
   <preference name='user' value='' readonly = 'false' />
 
-  <icon src='icons/64.png' />
-  <icon src='icons/18.png' />
+  <!-- <icon src='icons/64.png' /> -->
+  <!-- <icon src='icons/18.png' /> -->
 </widget>

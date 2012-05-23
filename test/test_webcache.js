@@ -9,10 +9,10 @@ opera = {
 	}
 }
 
-var myrel = require('../includes/00-myrelocator').myrelocator
+var cf = require('../src/cachefinder').cachefinder
 
 test("rewriteUri", function(t) {
 	t.equal('http://webcache.googleusercontent.com/search?q=cache:foo&strip=1',
-			myrel.relocate('foo', 'Google Text Only'))
+			cf.find('foo', 'Google Text Only'))
 	t.end()
 })

@@ -1,17 +1,17 @@
-function MyRelocator(src) {
+function CacheFinder(src) {
 	this.src = src
 }
 
-MyRelocator.rewriteUri = function(src, uri_template) {
+CacheFinder.rewriteUri = function(src, uri_template) {
 	if (!src) return 'http://127.0.0.1/'
 	return uri_template.replace('%s', src)
 }
 
-MyRelocator.bingCache = function(src, uri_template) {
+CacheFinder.bingCache = function(src, uri_template) {
 	throw new Error("not implemented")
 }
 
-MyRelocator.isSeparator = function(text) {
+CacheFinder.isSeparator = function(text) {
 	return text.match(/^separator$/i)
 }
 
@@ -21,41 +21,41 @@ MyRelocator.isSeparator = function(text) {
   Prototype: foo(src, uri_template)
   Return: a string--ready-to-go uri
 */
-MyRelocator.data = {
+CacheFinder.data = {
 	'Google' : {
-		'callback' : MyRelocator.rewriteUri,
+		'callback' : CacheFinder.rewriteUri,
 		'uri' : 'http://webcache.googleusercontent.com/search?q=cache:%s'
 	},
 	'Google Text Only' : {
-		'callback' : MyRelocator.rewriteUri,
+		'callback' : CacheFinder.rewriteUri,
 		'uri' : 'http://webcache.googleusercontent.com/search?q=cache:%s&strip=1'
 	},
 	'separator' : null,
 	'Blekko' : {
-		'callback' : MyRelocator.rewriteUri,
+		'callback' : CacheFinder.rewriteUri,
 		'uri' : 'http://blekko-webcache.com/cache/%s'
 	},
 	'Bing' : {
 		'hide' : true,
-		'callback' : MyRelocator.bingCache,
+		'callback' : CacheFinder.bingCache,
 		'uri' : null
 	},
 	'Wayback Machine' : {
-		'callback' : MyRelocator.rewriteUri,
+		'callback' : CacheFinder.rewriteUri,
 		'uri' : 'http://wayback.archive.org/web/*/%s'
 	}
 }
 
-MyRelocator.relocate = function(src, service) {
-	if (!MyRelocator.data[service]) {
-		console.error('MyRelocator.relocate: unknown service: ' + service)
+CacheFinder.find = function(src, service) {
+	if (!CacheFinder.data[service]) {
+		console.error('CacheFinder.relocate: unknown service: ' + service)
 		return null
 	}
 
-	var t = MyRelocator.data[service]
+	var t = CacheFinder.data[service]
 	return t.callback(src, t.uri)
 }
 
 // for nodejs tests
-if (typeof exports == 'undefined') var exports = this['00-myrelocator.js'] = {}
-exports.myrelocator = MyRelocator
+if (typeof exports == 'undefined') var exports = this['cachefinder.js'] = {}
+exports.cachefinder = CacheFinder

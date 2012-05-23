@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-var mr = require('../includes/00-myrelocator').myrelocator
+var cf = require('../src/cachefinder').cachefinder
 
 var t = '<ul>\n'
-for (var i in mr.data) {
-	if (mr.isSeparator(i)) {
+for (var i in cf.data) {
+	if (cf.isSeparator(i)) {
 		t += '<hr />\n'
 		continue
 	}
-	if (mr.data[i]['hide']) continue
+	if (cf.data[i]['hide']) continue
 	
 	t += '<li>' + i + '</li>\n'
 }

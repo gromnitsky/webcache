@@ -1,6 +1,6 @@
 window.addEventListener("load", function() {
 	var UIItemProperties = {
-		title: "Get this page form the cache on the web",
+		title: "Get a cached version of this page",
 		icon: "icons/18.png",
 		popup: {
             href: "popup.html",

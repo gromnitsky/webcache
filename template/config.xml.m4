@@ -5,11 +5,6 @@
   <description>_DESCRIPTION</description>
   <author href='_HOMEPAGE' email='_EMAIL'>_AUTHOR</author>
 
-  <feature name='opera:urlfilter' />
-
-  <preference name='width' value='500' readonly = 'false' />
-  <preference name='user' value='' readonly = 'false' />
-
   <icon src='icons/64.png' />
   <icon src='icons/18.png' />
 </widget>

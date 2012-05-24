@@ -11,8 +11,8 @@
 	],
 	
 	"name" : "webcache",
-	"version" : "0.0.1",
-	"description" : "Creates a toolbar button with a popup menu of several web crawlers.",
+	"version" : "0.0.2",
+	"description" : "Display a cached version of the current page from several web crawlers.",
 	"author" : "Alexander Gromnitsky <alexander.gromnitsky@gmail.com>",
 	"license": {
 		"type" : "MIT",

@@ -2,7 +2,7 @@ function Linker() {
 	this.port = null
 }
 
-// Listen to 'port:ready' message from 99-webcache.js
+// Listen to 'port:ready' message from main.js
 Linker.prototype.listen = function() {
 	o = this
 	

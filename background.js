@@ -25,7 +25,7 @@ window.addEventListener("load", function() {
 		}
 	}
 
-	// Listen to the message form 00-webcache.js.
+	// Listen to the messages form main.js.
 	// Those are the result of clinking in popup.html.
 	opera.extension.onmessage = function(event) {
 		opera.extension.tabs.create({url: event.data})

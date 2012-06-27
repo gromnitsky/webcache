@@ -10,7 +10,7 @@
     "popup.js"
   ],
   "name": "webcache",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Display a cached version of the current page from several web crawlers.",
   "author": "Alexander Gromnitsky <alexander.gromnitsky@gmail.com>",
   "license": {

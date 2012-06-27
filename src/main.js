@@ -19,6 +19,12 @@ function handlePopupMessage(event) {
 
 	// sent it to background.js to open a new tab with current
 	// window URL
-	opera.extension.postMessage(CacheFinder.find(window.location.toString(),
-												 event.data))
+	try {
+		var uri = CacheFinder.find(window.location, event.data)
+	} catch (e) {
+		alert(e.message)
+		return
+	}
+	
+	opera.extension.postMessage(uri)
 }

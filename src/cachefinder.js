@@ -4,15 +4,25 @@ function CacheFinder(src) {
 
 CacheFinder.rewriteUri = function(src, uri_template) {
 	if (!src) return 'http://127.0.0.1/'
-	return uri_template.replace('%s', src)
+	return uri_template.replace('%s', src.toString())
 }
 
 CacheFinder.bingCache = function(src, uri_template) {
 	throw new Error("not implemented")
 }
 
+// src is a window.location object
+CacheFinder.coralcdn = function(src, uri_template) {
+	if (!src) return 'http://127.0.0.1/'
+	if (src.protocol !== 'http:') throw new Error("Coral CND supports only HTTP protocol")
+		
+	var port = src.port
+	port || (port = 80)
+	return src.protocol + '//' + src.hostname + '.' + port + '.nyud.net' + src.pathname + src.search + src.hash
+}
+
 CacheFinder.isSeparator = function(text) {
-	return text.match(/^separator$/i)
+	return text.match(/^separator/i)
 }
 
 /*
@@ -30,7 +40,7 @@ CacheFinder.data = {
 		'callback' : CacheFinder.rewriteUri,
 		'uri' : 'http://webcache.googleusercontent.com/search?q=cache:%s&strip=1'
 	},
-	'separator' : null,
+	'separator 0' : null,
 	'Blekko' : {
 		'callback' : CacheFinder.rewriteUri,
 		'uri' : 'http://blekko-webcache.com/cache/%s'
@@ -40,9 +50,18 @@ CacheFinder.data = {
 		'callback' : CacheFinder.bingCache,
 		'uri' : null
 	},
+	'Coral CDN' : {
+		'callback' : CacheFinder.coralcdn,
+		'uri' : null
+	},
+	'separator 1' : null,
 	'Wayback Machine' : {
 		'callback' : CacheFinder.rewriteUri,
 		'uri' : 'http://wayback.archive.org/web/*/%s'
+	},
+	'Liveweb' : {
+		'callback' : CacheFinder.rewriteUri,
+		'uri' : 'http://liveweb.archive.org/%s'
 	}
 }
 

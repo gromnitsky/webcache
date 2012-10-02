@@ -19,8 +19,8 @@ window.addEventListener("load", function() {
 			&& event.origin.indexOf('widget://') > -1 ) {
 			var tab = opera.extension.tabs.getFocused()
 			if (tab) {
-				tab.postMessage("port:new", [event.source])
-				console.log('background.js: port:new to injected script')
+				tab.postMessage({msg: 'portNew'}, [event.source])
+				console.log('background.js: newPort to injected script')
 			}
 		}
 	}
@@ -32,3 +32,31 @@ window.addEventListener("load", function() {
 	}
 	
 }, false)
+
+
+window.addEventListener('DOMContentLoaded', function() {
+	if (opera.contexts.menu) {
+		// create a menu item properties object
+		var itemProps = {
+			contexts: ['link', 'image'],
+			title: 'webcache',
+			onclick: function(event) {
+				// send a message to the injected script in the originating tab
+				console.log('background.js: clicked in the context menu')
+				var m = {
+					msg: 'menuContext',
+					mdata: 'some crawler'
+				}
+				event.source.postMessage(m)
+			}
+		}
+		
+		// create a menu item
+		var item = opera.contexts.menu.createItem(itemProps)
+		opera.contexts.menu.addItem(item)
+	} else {
+		console.log('background.js: opera.contexts.menu is undefined')
+	}
+}, false);
+
+console.log('background.js: loaded')

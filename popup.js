@@ -2,12 +2,12 @@ function Linker() {
 	this.port = null
 }
 
-// Listen to 'port:ready' message from main.js
+// Listen to 'portReady' message from main.js
 Linker.prototype.listen = function() {
-	o = this
+	var o = this
 	
 	opera.extension.onmessage = function(event) {
-		if (event.data == "port:ready") {
+		if (event.data.msg == "portReady") {
 			if (event.ports.length > 0) {
 				console.log('popup.js: new port received')
 				o.port = event.ports[0]
@@ -28,24 +28,23 @@ Linker.prototype.handleMessageFromInjectedScript = function(event) {
 
 Linker.prototype.mybind = function() {
 	var e = document.querySelectorAll('li')
+	var o = this
 	for (var i = 0, len = e.length; i < len; i++) {
-		o = this
 		e[i].addEventListener('click', function() {
 			o.sendMessage(this.innerText)
 		}, false)
 	}
 }
 
-Linker.prototype.sendMessage = function(msg) {
+Linker.prototype.sendMessage = function(userChoice) {
 	if (!this.port) return
 	
-	this.port.postMessage(msg)
-	console.log('popup.js: send a msg: ' + msg)
-//	window.close()
+	this.port.postMessage({msg: 'popupSelection', mdata: userChoice})
+	console.log('popup.js: send a msg: ' + userChoice)
 }
 
 
-/* main */
+/* Main */
 window.onload = function() {
 	var linker = new Linker()
 	linker.listen()

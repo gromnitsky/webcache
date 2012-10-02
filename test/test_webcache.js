@@ -1,3 +1,5 @@
+/*global suite:true, setup:true, test:true */
+
 var assert = require('assert')
 
 var Zombie = require("zombie")

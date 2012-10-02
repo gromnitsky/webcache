@@ -1,6 +1,4 @@
-function CacheFinder(src) {
-	this.src = src
-}
+function CacheFinder(src) {}
 
 CacheFinder.rewriteUri = function(src, uri_template) {
 	if (!src) return 'http://127.0.0.1/'
@@ -15,9 +13,8 @@ CacheFinder.bingCache = function(src, uri_template) {
 CacheFinder.coralcdn = function(src, uri_template) {
 	if (!src) return 'http://127.0.0.1/'
 	if (src.protocol !== 'http:') throw new Error("Coral CND supports only HTTP protocol")
-		
-	var port = src.port
-	port || (port = 80)
+
+	var port = src.port || 80
 	return src.protocol + '//' + src.hostname + '.' + port + '.nyud.net' + src.pathname + src.search + src.hash
 }
 

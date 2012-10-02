@@ -9,8 +9,6 @@ PACKAGE := $(NAME)-$(VER).oex
 TEMPLATE := template
 SRC := $(wildcard src/*.js)
 
-.PHONY: src src_clean clean test package package_clean
-
 all: test
 
 src_clean:
@@ -27,7 +25,11 @@ popup.html: $(TEMPLATE)/popup.m4 $(TEMPLATE)/popup.js $(SRC)
 includes/base.js: $(TEMPLATE)/src.m4 $(SRC)
 	$(M4) $< > $@
 
-test: src
+node_modules: package.json
+	npm install
+	touch $@
+
+test: src node_modules
 	$(MOCHA) -u tdd
 
 package_clean:
@@ -36,7 +38,9 @@ package_clean:
 package: $(INFO) package_clean src
 	zip $(PACKAGE) `$(JSONTOOL) files < $< | $(JSONTOOL) -a`
 
-install:
-	opera config.xml &
-
 clean: package_clean src_clean
+
+findjs:
+	@ls *js $(SRC)
+
+.PHONY: src src_clean clean test package package_clean findjs

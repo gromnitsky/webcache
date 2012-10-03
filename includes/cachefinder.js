@@ -16,20 +16,28 @@
 
 		CacheFinder.rewriteUri = function(src, uri_template) {
 			if (!src) return 'http://127.0.0.1/'
-			return uri_template.replace('%s', src.toString())
+			return uri_template.replace('%s', src)
 		}
 
 		CacheFinder.bingCache = function(src, uri_template) {
 			throw new Error("not implemented")
 		}
 
-		// src is a window.location object
+		/*
+		  Create a hidden dom <a> element to parse it like window.location.
+
+		  src -- href for <a>
+		  uri_template -- unused
+		*/
 		CacheFinder.coralcdn = function(src, uri_template) {
 			if (!src) return 'http://127.0.0.1/'
-			if (src.protocol !== 'http:') throw new Error("Coral CND supports only HTTP protocol")
 
-			var port = src.port || 80
-			return src.protocol + '//' + src.hostname + '.' + port + '.nyud.net' + src.pathname + src.search + src.hash
+			var a = document.createElement('a')
+			a.href = src
+			if (a.protocol !== 'http:') throw new Error("Coral CND supports only HTTP protocol")
+
+			var port = a.port ? ("." + a.port) : ""
+			return a.protocol + '//' + a.hostname + port + '.nyud.net' + a.pathname + a.search + a.hash
 		}
 
 		CacheFinder.isSeparator = function(text) {

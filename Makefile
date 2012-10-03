@@ -25,7 +25,7 @@ node_modules: package.json
 	touch $@
 
 test: compile node_modules
-	$(MOCHA) -u tdd
+	$(MOCHA) -u tdd --ignore-leaks
 
 package_clean:
 	rm -rf $(PACKAGE)

@@ -27,7 +27,6 @@
     "url": "http://github.com/gromnitsky/webcache"
   },
   "dependencies": {
-    "mocha": "~1.5.0",
-    "zombie": "~1.4.1"
+    "mocha": "~1.5.0"
   }
 }

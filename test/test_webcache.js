@@ -2,9 +2,6 @@
 
 var assert = require('assert')
 
-var Zombie = require("zombie")
-var	browser = new Zombie()
-
 // fake browser staff
 opera = {
 	'extension' : {
@@ -27,17 +24,49 @@ suite('cachefinder', function() {
 	})
 
 	test("coralcdn", function() {
-		browser.window.location = 'http://www.example.com:1234/host?s=1&2=3#ccc'
+		document = {
+			createElement : function(e) {
+				return {
+					protocol: 'http:',
+					port: '1234',
+					hostname: 'www.example.com',
+					pathname: '/host',
+					search: '?s=1&2=3',
+					hash: '#ccc'
+				}
+			}
+		}
 		assert.equal('http://www.example.com.1234.nyud.net/host?s=1&2=3#ccc',
-					 cf.find(browser.window.location, 'Coral CDN'))
+					 cf.find('http://www.example.com:1234/host?s=1&2=3#ccc',
+							 'Coral CDN'))
 
-		browser.window.location = 'http://example.com'
-		assert.equal('http://example.com.80.nyud.net/',
-					 cf.find(browser.window.location, 'Coral CDN'))
+		document = {
+			createElement : function(e) {
+				return {
+					protocol: 'http:',
+					hostname: 'example.com',
+					pathname: '/',
+					search: '',
+					hash: ''
+				}
+			}
+		}
+		assert.equal('http://example.com.nyud.net/',
+					 cf.find('http://example.com', 'Coral CDN'))
 
-		browser.window.location = 'https://example.com'
+		document = {
+			createElement : function(e) {
+				return {
+					protocol: 'https:',
+					hostname: 'example.com',
+					pathname: '/',
+					search: '',
+					hash: ''
+				}
+			}
+		}
 		assert.throws(function() {
-			cf.find(browser.window.location, 'Coral CDN')
+			cf.find('https://example.com', 'Coral CDN')
 		})
 					 
 	})

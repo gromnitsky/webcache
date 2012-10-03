@@ -37,8 +37,8 @@ dnl
 <body>
   <h3>Extract Cache From</h3>
   
-  syscmd(_SCRIPT)
+syscmd(_SCRIPT)
 
-  <script src="popup.js"></script>
+  <script src="lib/popup.js"></script>
 </body>
 </html>

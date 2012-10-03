@@ -17,7 +17,7 @@ compile: config.xml popup.html
 config.xml: $(INFO) template/config-vars.js template/config.xml.m4
 	template/config-vars.js $< template/config.xml.m4 > $@
 
-popup.html: template/popup.m4 template/popup-ul-list.js includes/cachefinder.js
+popup.html: template/popup.m4 template/popup-ul-list.js lib/cachefinder.js
 	$(M4) -D_SCRIPT=template/popup-ul-list.js $< > $@
 
 node_modules: package.json

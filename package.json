@@ -5,14 +5,14 @@
     "icons/16.png",
     "config.xml",
 
-    "includes/cachefinder.js",
     "includes/z.js",
 
     "index.html",
-    "background.js",
+    "lib/background.js",
+    "lib/cachefinder.js",
 
     "popup.html",
-    "popup.js"
+    "lib/popup.js"
   ],
   "name": "webcache",
   "version": "0.2.0",

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var cf = require('../includes/cachefinder').CacheFinder
+var cf = require('../lib/cachefinder').CacheFinder
 
 var t = '<ul>\n'
 for (var i in cf.data) {
@@ -8,7 +8,7 @@ for (var i in cf.data) {
 		t += '<hr />\n'
 		continue
 	}
-	if (cf.data[i]['hide']) continue
+	if (cf.data[i].hide) continue
 	
 	t += '<li>' + i + '</li>\n'
 }

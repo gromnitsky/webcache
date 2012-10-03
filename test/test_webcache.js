@@ -11,7 +11,7 @@ opera = {
 	}
 }
 
-var cf = require('../includes/cachefinder').CacheFinder
+var cf = require('../lib/cachefinder').CacheFinder
 
 suite('cachefinder', function() {
 

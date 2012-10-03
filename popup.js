@@ -2,20 +2,21 @@ function Linker() {
 	this.port = null
 }
 
-// Listen to 'portReady' message from main.js
+// Listen to 'portReady' message from z.js.
 Linker.prototype.listen = function() {
 	var o = this
 	
 	opera.extension.onmessage = function(event) {
-		if (event.data.msg == "portReady") {
-			if (event.ports.length > 0) {
-				console.log('popup.js: new port received')
-				o.port = event.ports[0]
-
-				o.mybind()
-			}
-		} else {
-			console.error('popup.js: unknown message: ' + event.data)
+		if (event.data.msg !== "portReady") {
+			console.error('popup.js: unknown message: ' + event.data.msg)
+			return
+		}
+		
+		if (event.ports.length > 0) {
+			console.log('popup.js: (popup step 3/6) new port received')
+			o.port = event.ports[0]
+			
+			o.mybind()
 		}
 	}
 }
@@ -25,16 +26,16 @@ Linker.prototype.mybind = function() {
 	var o = this
 	for (var i = 0, len = e.length; i < len; i++) {
 		e[i].addEventListener('click', function() {
-			o.sendMessage(this.innerText)
+			o.message2injectScript(this.innerText)
 		}, false)
 	}
 }
 
-Linker.prototype.sendMessage = function(userChoice) {
+Linker.prototype.message2injectScript = function(userChoice) {
 	if (!this.port) return
 	
 	this.port.postMessage({msg: 'popupSelection', mdata: userChoice})
-	console.log('popup.js: send a msg: ' + userChoice)
+	console.log('popup.js: (popup step 4/6) popupSelection: ' + userChoice)
 }
 
 

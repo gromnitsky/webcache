@@ -18,10 +18,10 @@
 			event.ports[0].postMessage({msg: 'portReady'}, [channel.port2])
 			channel.port1.onmessage = handlePopupMessage
 			
-			console.log('z.js: new port send')
+			console.log('z.js: (popup step 2/6) new port send')
 			break
 		case 'menuContext':
-			console.log('z.js: menuContent mdata.title=' + event.data.mdata.crawler)
+			console.log('z.js: (cm step 2/3) menuContent mdata.crawler: ' + event.data.mdata.crawler)
 			if (!event.data.mdata.src)
 				throw new Error('cannot get info from clicked DOM element')
 
@@ -34,8 +34,8 @@
 	}
 
 	function handlePopupMessage(event) {
-		console.log("z.js: MESSAGE RECEIVED FROM THE POPUP: " + event.data.mdata)
-		loadCrawler(window.location, event.data.mdata)
+		console.log("z.js: (popup step 5/6) message from the popup: " + event.data.mdata)
+		loadCrawler(window.location.toString(), event.data.mdata)
 	}
 
 	// Sent it to background.js to open a new tab with transformed src as URL.
@@ -48,7 +48,7 @@
 			return
 		}
 		
-		opera.extension.postMessage(uri)
+		opera.extension.postMessage({msg: 'cacheURI', mdata: uri})
 	}
 
 }).call(this)

@@ -1,3 +1,5 @@
+/*global CacheFinder:true */
+
 window.addEventListener("load", function() {
 	var UIItemProperties = {
 		title: "Get a cached version of this page",
@@ -18,10 +20,9 @@ window.addEventListener("load", function() {
 		if (event.origin.indexOf("popup.html") > -1
 			&& event.origin.indexOf('widget://') > -1 ) {
 			var tab = opera.extension.tabs.getFocused()
-			if (tab) {
-				tab.postMessage({msg: 'portNew'}, [event.source])
-				console.log('background.js: newPort to injected script')
-			}
+			if (!tab) throw new Error('background.js: no tab focus')
+			tab.postMessage({msg: 'portNew'}, [event.source])
+			console.log('background.js: newPort to injected script')
 		}
 	}
 
@@ -36,27 +37,58 @@ window.addEventListener("load", function() {
 
 window.addEventListener('DOMContentLoaded', function() {
 	if (opera.contexts.menu) {
-		// create a menu item properties object
-		var itemProps = {
-			contexts: ['link', 'image'],
-			title: 'webcache',
-			onclick: function(event) {
-				// send a message to the injected script in the originating tab
-				console.log('background.js: clicked in the context menu')
-				var m = {
-					msg: 'menuContext',
-					mdata: 'some crawler'
+		var folder = makeMenu(function(event) {
+			console.log('background.js: click in the context menu')
+			var m = {
+				msg: 'menuContext',
+				mdata: {
+					crawler: event.target.title,
+					src: (event.linkURL || event.srcURL)
 				}
-				event.source.postMessage(m)
 			}
-		}
+			// send a message to the injected script in the originating tab
+			event.source.postMessage(m)
+		})
 		
-		// create a menu item
-		var item = opera.contexts.menu.createItem(itemProps)
-		opera.contexts.menu.addItem(item)
+		opera.contexts.menu.addItem(folder)
 	} else {
-		console.log('background.js: opera.contexts.menu is undefined')
+		console.log("background.js: contexts menu isn't supported; upgrade Opera to 12.10")
 	}
-}, false);
+}, false)
+
+function makeMenu(onclickCallback) {
+	var folder = opera.contexts.menu.createItem({
+		contexts: ['link', 'image'],
+		title: 'webcache',
+		type: 'folder',
+		icon: 'icons/16.png'
+	})
+
+	// put entries in folder
+	for (var idx in CacheFinder.data) {
+		var entry = null
+		
+		if (CacheFinder.isSeparator(idx)) {
+			entry = opera.contexts.menu.createItem({
+				contexts: ['link', 'image'],
+				title: idx,
+				type: 'line'
+			})
+		} else {
+			if (CacheFinder.data[idx].hide) continue
+			
+			entry = opera.contexts.menu.createItem({
+				contexts: ['link', 'image'],
+				title: idx,
+				type: 'entry',
+				onclick: function(event) { onclickCallback(event) }
+			})
+		}
+
+		folder.addItem(entry)
+	}
+
+	return folder
+}
 
 console.log('background.js: loaded')

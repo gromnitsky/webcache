@@ -4,7 +4,6 @@
 
 /*global CacheFinder:true */
 (function() {
-
 	/*
 	  Listen to messages from background.js.
 
@@ -22,25 +21,16 @@
 			console.log('z.js: new port send')
 			break
 		case 'menuContext':
-			console.log('z.js: menuContent')
-			// doing nothing here, just passing by in route to
-			// opera.contexts.menu.onclick
+			console.log('z.js: menuContent mdata.title=' + event.data.mdata.crawler)
+			if (!event.data.mdata.src)
+				throw new Error('cannot get info from clicked DOM element')
+
+			loadCrawler(event.data.mdata.src, event.data.mdata.crawler)
 			break
 		default:
 			console.error('z.js: unknown message: ' + event.data.msg)
 			break
 		}
-	}
-
-	opera.contexts.menu.onclick = function(menuEvent) {
-		console.dir(menuEvent)
-		// listen for a message from background.js
-		opera.extension.addEventListener('message', function(event) {
-			console.log('z.js: USER CLICKED ON CM: ' + event.data.mdata)
-			var src = menuEvent.linkURL || menuEvent.srcURL
-			if (!src) throw new Error('cannot get info from clicked DOM element')
-			loadCrawler(src, event.data.mdata)
-		}, false)
 	}
 
 	function handlePopupMessage(event) {

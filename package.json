@@ -2,6 +2,7 @@
   "files": [
     "icons/64.png",
     "icons/18.png",
+    "icons/16.png",
     "config.xml",
 
     "includes/cachefinder.js",

@@ -7,6 +7,7 @@
 
   <icon src='icons/64.png' />
   <icon src='icons/18.png' />
+  <icon src='icons/16.png' />
 
   <feature name="opera:contextmenus" />
 </widget>

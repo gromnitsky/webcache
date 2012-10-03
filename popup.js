@@ -11,7 +11,6 @@ Linker.prototype.listen = function() {
 			if (event.ports.length > 0) {
 				console.log('popup.js: new port received')
 				o.port = event.ports[0]
-				o.port.onmessage = this.handleMessageFromInjectedScript
 
 				o.mybind()
 			}
@@ -19,11 +18,6 @@ Linker.prototype.listen = function() {
 			console.error('popup.js: unknown message: ' + event.data)
 		}
 	}
-}
-
-// FIXME: unused
-Linker.prototype.handleMessageFromInjectedScript = function(event) {
-	console.log("popup.js: MESSAGE FROM THE INJECTED SCRIPT: " + event.data)
 }
 
 Linker.prototype.mybind = function() {

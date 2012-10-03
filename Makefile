@@ -39,6 +39,6 @@ clobber: clean
 	rm -rf node_modules
 
 findjs:
-	@ls *js includes/*js
+	@ls lib/*js includes/*js
 
 .PHONY: compile compile_clean clean clobber test oex oex_clean findjs

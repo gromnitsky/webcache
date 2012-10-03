@@ -27,13 +27,13 @@ node_modules: package.json
 test: compile node_modules
 	$(MOCHA) -u tdd --ignore-leaks
 
-package_clean:
+oex_clean:
 	rm -rf $(PACKAGE)
 
-package: $(INFO) package_clean compile
+oex: $(INFO) oex_clean compile
 	zip $(PACKAGE) `$(JSONTOOL) files < $< | $(JSONTOOL) -a`
 
-clean: package_clean compile_clean
+clean: oex_clean compile_clean
 
 clobber: clean
 	rm -rf node_modules
@@ -41,4 +41,4 @@ clobber: clean
 findjs:
 	@ls *js includes/*js
 
-.PHONY: compile compile_clean clean clobber test package package_clean findjs
+.PHONY: compile compile_clean clean clobber test oex oex_clean findjs

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var cf = require('../src/cachefinder').cachefinder
+var cf = require('../includes/cachefinder').CacheFinder
 
 var t = '<ul>\n'
 for (var i in cf.data) {

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-path = require('path')
-fs = require('fs')
-spawn = require('child_process').spawn
+var path = require('path')
+var fs = require('fs')
+var spawn = require('child_process').spawn
 
 function m4macro(name, val) {
 	return "define(`" + name + "', `" + val + "')dnl\n"
@@ -17,12 +17,12 @@ var json = JSON.parse(fs.readFileSync(process.argv[2], "ascii"))
 
 // extract from JSON staff for m4 macro definitions
 var m4m = ''
-m4m += m4macro('_NAME', json['name'])
-m4m += m4macro('_VERSION', json['version'])
-m4m += m4macro('_DESCRIPTION', json['description'])
-m4m += m4macro('_AUTHOR', json['author'].match(/(.+) <(.+)>/)[1])
-m4m += m4macro('_EMAIL', json['author'].match(/(.+) <(.+)>/)[2])
-m4m += m4macro('_HOMEPAGE', json['repository']['url'])
+m4m += m4macro('_NAME', json.name)
+m4m += m4macro('_VERSION', json.version)
+m4m += m4macro('_DESCRIPTION', json.description)
+m4m += m4macro('_AUTHOR', json.author.match(/(.+) <(.+)>/)[1])
+m4m += m4macro('_EMAIL', json.author.match(/(.+) <(.+)>/)[2])
+m4m += m4macro('_HOMEPAGE', json.repository.url)
 
 // run m4 and feed its stdin with a template
 var ls = spawn('gm4')
@@ -38,5 +38,5 @@ ls.stderr.on('data', function(data) {
 });
 
 ls.on('exit', function(code) {
-	if (code != 0) process.exit(code)
+	if (code !== 0) process.exit(code)
 });

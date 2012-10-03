@@ -6,41 +6,39 @@ INFO := package.json
 NAME := $(shell $(JSONTOOL) name < $(INFO))
 VER := $(shell $(JSONTOOL) version < $(INFO))
 PACKAGE := $(NAME)-$(VER).oex
-TEMPLATE := template
-SRC := $(wildcard src/*.js)
 
 all: test
 
-src_clean:
-	rm -rf config.xml popup.html includes/base.js
+compile_clean:
+	rm -rf config.xml popup.html
 
-src: config.xml includes/base.js popup.html
+compile: config.xml popup.html
 
-config.xml: $(INFO) $(TEMPLATE)/config-xml.js $(TEMPLATE)/config.xml.m4
-	$(TEMPLATE)/config-xml.js $< $(TEMPLATE)/config.xml.m4 > $@
+config.xml: $(INFO) template/config-vars.js template/config.xml.m4
+	template/config-vars.js $< template/config.xml.m4 > $@
 
-popup.html: $(TEMPLATE)/popup.m4 $(TEMPLATE)/popup.js $(SRC)
-	$(M4) -D_SCRIPT=$(TEMPLATE)/popup.js $< > $@
-
-includes/base.js: $(TEMPLATE)/src.m4 $(SRC)
-	$(M4) $< > $@
+popup.html: template/popup.m4 template/popup-ul-list.js includes/cachefinder.js
+	$(M4) -D_SCRIPT=template/popup-ul-list.js $< > $@
 
 node_modules: package.json
 	npm install
 	touch $@
 
-test: src node_modules
+test: compile node_modules
 	$(MOCHA) -u tdd
 
 package_clean:
 	rm -rf $(PACKAGE)
 
-package: $(INFO) package_clean src
+package: $(INFO) package_clean compile
 	zip $(PACKAGE) `$(JSONTOOL) files < $< | $(JSONTOOL) -a`
 
-clean: package_clean src_clean
+clean: package_clean compile_clean
+
+clobber: clean
+	rm -rf node_modules
 
 findjs:
-	@ls *js $(SRC)
+	@ls *js includes/*js
 
-.PHONY: src src_clean clean test package package_clean findjs
+.PHONY: compile compile_clean clean clobber test package package_clean findjs

@@ -3,9 +3,13 @@
     "icons/64.png",
     "icons/18.png",
     "config.xml",
-    "includes/base.js",
+
+    "includes/cachefinder.js",
+    "includes/z.js",
+
     "index.html",
     "background.js",
+
     "popup.html",
     "popup.js"
   ],
